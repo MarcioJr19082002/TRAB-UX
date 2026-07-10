@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GourmetDash | Início</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: "#1565c0",
+              deep: "#0d4a94",
+              bright: "#2b8aef",
+              soft: "#e8f3fc",
+            },
+            ink: {
+              DEFAULT: "#151a22",
+              muted: "#4a5568",
+              faint: "#7a8699",
+            },
+            paper: {
+              DEFAULT: "#f4f7fb",
+              card: "#ffffff",
+              line: "#dce4ef",
+            },
+          },
+          fontFamily: {
+            display: ["Outfit", "sans-serif"],
+            sans: ["Manrope", "sans-serif"],
+          },
+          boxShadow: {
+            soft: "0 8px 28px rgba(26, 28, 29, 0.06)",
+            lift: "0 14px 40px rgba(21, 101, 192, 0.18)",
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    :root {
+      --brand: #1565c0;
+      --brand-deep: #0d4a94;
+      --paper: #f4f7fb;
+    }
+
+    body {
+      font-family: Manrope, sans-serif;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, #cfe3fb 0%, transparent 55%),
+        linear-gradient(180deg, #f7fafc 0%, #e8eef6 100%);
+      min-height: 100dvh;
+      color: #151a22;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      user-select: none;
+    }
+
+    .material-symbols-outlined.filled {
+      font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .brand-wash {
+      background:
+        radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.22), transparent 45%),
+        linear-gradient(135deg, #0d4a94 0%, #1565c0 48%, #2b8aef 100%);
+    }
+
+    .phone-shell {
+      width: min(100%, 420px);
+      margin-inline: auto;
+      min-height: 100dvh;
+      background: var(--paper);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    @media (min-width: 480px) {
+      body {
+        display: grid;
+        place-items: center;
+        padding: 2rem 1rem;
+      }
+
+      .phone-shell {
+        min-height: 844px;
+        max-height: 900px;
+        border-radius: 2rem;
+        box-shadow:
+          0 0 0 1px rgba(26, 28, 29, 0.06),
+          0 24px 80px rgba(26, 28, 29, 0.14);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .phone-shell main {
+        overflow-y: auto;
+        flex: 1;
+      }
+    }
+
+    .category-btn.is-active .category-icon {
+      background: #e8f3fc;
+      box-shadow: inset 0 0 0 2px #1565c0;
+    }
+
+    .category-btn.is-active span.label {
+      color: #1565c0;
+    }
+
+    .reveal {
+      animation: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .reveal-delay-1 { animation-delay: 0.08s; }
+    .reveal-delay-2 { animation-delay: 0.16s; }
+    .reveal-delay-3 { animation-delay: 0.24s; }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse-soft {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+
+    .cart-fab:hover {
+      animation: pulse-soft 1.2s ease-in-out infinite;
+    }
+
+    .promo-img {
+      mask-image: linear-gradient(90deg, transparent 0%, #000 28%);
+    }
+
+    header.is-scrolled {
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 4px 20px rgba(26, 28, 29, 0.06);
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-shell">
+    <header id="topbar" class="sticky top-0 z-50 flex items-center justify-between gap-3 px-5 h-16 bg-paper/80 backdrop-blur-md transition-all duration-300">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <span class="material-symbols-outlined text-brand text-[26px]" aria-hidden="true">location_on</span>
+        <div class="min-w-0">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-ink-faint">Entregar em</p>
+          <p class="font-display text-[17px] font-semibold truncate leading-tight">Rua das Flores, 123</p>
+        </div>
+      </div>
+      <button type="button" class="w-10 h-10 grid place-items-center rounded-full hover:bg-white/80 active:scale-95 transition" aria-label="Buscar">
+        <span class="material-symbols-outlined text-ink" aria-hidden="true">search</span>
+      </button>
+    </header>
+
+    <main class="pb-28 px-5">
+      <p class="font-display text-2xl font-extrabold tracking-tight text-ink mt-1 reveal">
+        Gourmet<span class="text-brand">Dash</span>
+      </p>
+      <p class="text-sm text-ink-muted mt-1 mb-5 reveal reveal-delay-1">Comida boa, na porta — agora.</p>
+
+      <!-- Promo -->
+      <section class="reveal reveal-delay-2" aria-label="Promoção">
+        <div class="relative h-44 rounded-2xl overflow-hidden brand-wash shadow-lift">
+          <div class="relative z-10 h-full flex flex-col justify-center px-5 max-w-[58%]">
+            <h2 class="font-display text-[22px] sm:text-2xl font-bold text-white leading-[1.15]">
+              50% off<br />no 1º pedido
+            </h2>
+            <p class="text-white/80 text-xs mt-2 leading-snug">Válido para novos clientes nesta semana.</p>
+            <button type="button" class="mt-3.5 bg-white text-brand-deep text-xs font-bold py-2.5 px-5 rounded-xl w-fit hover:bg-brand-soft active:scale-95 transition">
+              Resgatar agora
+            </button>
+          </div>
+          <img
+            class="absolute right-0 bottom-0 w-[55%] h-full object-cover promo-img scale-105"
+            src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80"
+            alt="Hambúrguer gourmet com batatas fritas"
+          />
+        </div>
+      </section>
+
+      <!-- Categories -->
+      <section class="mt-8 reveal reveal-delay-3" aria-labelledby="categories-title">
+        <div class="flex items-end justify-between mb-3.5">
+          <h3 id="categories-title" class="font-display text-lg font-bold">Categorias</h3>
+          <a href="#" class="text-brand text-xs font-bold hover:underline">Ver todas</a>
+        </div>
+        <div id="categories" class="flex gap-3 overflow-x-auto no-scrollbar -mx-5 px-5 pb-1">
+          <button type="button" class="category-btn is-active flex flex-col items-center gap-2 flex-shrink-0" data-category="pizza">
+            <div class="category-icon w-16 h-16 rounded-2xl bg-white shadow-soft grid place-items-center p-2 transition">
+              <img class="w-11 h-11 object-cover rounded-lg" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=120&q=80" alt="" />
+            </div>
+            <span class="label text-xs font-bold text-ink">Pizza</span>
+          </button>
+          <button type="button" class="category-btn flex flex-col items-center gap-2 flex-shrink-0" data-category="sushi">
+            <div class="category-icon w-16 h-16 rounded-2xl bg-white shadow-soft grid place-items-center p-2 transition">
+              <img class="w-11 h-11 object-cover rounded-lg" src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=120&q=80" alt="" />
+            </div>
+            <span class="label text-xs font-bold text-ink">Sushi</span>
+          </button>
+          <button type="button" class="category-btn flex flex-col items-center gap-2 flex-shrink-0" data-category="burgers">
+            <div class="category-icon w-16 h-16 rounded-2xl bg-white shadow-soft grid place-items-center p-2 transition">
+              <img class="w-11 h-11 object-cover rounded-lg" src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=120&q=80" alt="" />
+            </div>
+            <span class="label text-xs font-bold text-ink">Burgers</span>
+          </button>
+          <button type="button" class="category-btn flex flex-col items-center gap-2 flex-shrink-0" data-category="sobremesas">
+            <div class="category-icon w-16 h-16 rounded-2xl bg-white shadow-soft grid place-items-center p-2 transition">
+              <img class="w-11 h-11 object-cover rounded-lg" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=120&q=80" alt="" />
+            </div>
+            <span class="label text-xs font-bold text-ink">Sobremesas</span>
+          </button>
+          <button type="button" class="category-btn flex flex-col items-center gap-2 flex-shrink-0" data-category="saladas">
+            <div class="category-icon w-16 h-16 rounded-2xl bg-white shadow-soft grid place-items-center p-2 transition">
+              <img class="w-11 h-11 object-cover rounded-lg" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=120&q=80" alt="" />
+            </div>
+            <span class="label text-xs font-bold text-ink">Saladas</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Restaurants -->
+      <section class="mt-8" aria-labelledby="nearby-title">
+        <h3 id="nearby-title" class="font-display text-lg font-bold mb-3.5">Populares perto de você</h3>
+        <div class="flex flex-col gap-4">
+          <a href="restaurant.html" class="block bg-white rounded-2xl overflow-hidden shadow-soft hover:shadow-md transition-shadow cursor-pointer group">
+            <div class="relative h-44 overflow-hidden">
+              <img
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=900&q=80"
+                alt="Prato de hambúrgueres artesanais"
+              />
+              <div class="absolute top-3 right-3 bg-white/95 backdrop-blur px-2 py-1 rounded-lg flex items-center gap-1 text-xs font-bold shadow-sm">
+                <span class="material-symbols-outlined filled text-amber-500 !text-sm" aria-hidden="true">star</span>
+                4.8
+              </div>
+            </div>
+            <div class="p-3.5">
+              <h4 class="font-display text-base font-bold">Burger House</h4>
+              <div class="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-muted">
+                <span class="inline-flex items-center gap-1">
+                  <span class="material-symbols-outlined !text-sm" aria-hidden="true">schedule</span>
+                  20–30 min
+                </span>
+                <span class="inline-flex items-center gap-1 text-brand font-bold">
+                  <span class="material-symbols-outlined !text-sm" aria-hidden="true">delivery_dining</span>
+                  Entrega grátis
+                </span>
+              </div>
+            </div>
+          </a>
+
+          <article class="bg-white rounded-2xl overflow-hidden shadow-soft hover:shadow-md transition-shadow cursor-pointer group">
+            <div class="relative h-44 overflow-hidden">
+              <img
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&w=900&q=80"
+                alt="Barca de sushi premium"
+              />
+              <div class="absolute top-3 right-3 bg-white/95 backdrop-blur px-2 py-1 rounded-lg flex items-center gap-1 text-xs font-bold shadow-sm">
+                <span class="material-symbols-outlined filled text-amber-500 !text-sm" aria-hidden="true">star</span>
+                4.9
+              </div>
+            </div>
+            <div class="p-3.5">
+              <h4 class="font-display text-base font-bold">Sushi Zen</h4>
+              <div class="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-muted">
+                <span class="inline-flex items-center gap-1">
+                  <span class="material-symbols-outlined !text-sm" aria-hidden="true">schedule</span>
+                  40–50 min
+                </span>
+                <span class="inline-flex items-center gap-1">
+                  <span class="material-symbols-outlined !text-sm" aria-hidden="true">delivery_dining</span>
+                  Entrega R$ 5,00
+                </span>
+              </div>
+            </div>
+          </article>
+
+          <a href="closed.html" class="block bg-white rounded-2xl overflow-hidden shadow-soft opacity-75 relative">
+            <div class="relative h-44 overflow-hidden grayscale-[40%]">
+              <img
+                class="w-full h-full object-cover"
+                src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80"
+                alt="Pizza napolitana no forno a lenha"
+              />
+              <div class="absolute inset-0 bg-ink/25 grid place-items-center">
+                <span class="bg-ink/90 text-white text-[11px] font-bold px-4 py-2 rounded-xl uppercase tracking-wider">Fechado</span>
+              </div>
+              <div class="absolute top-3 right-3 bg-white/95 backdrop-blur px-2 py-1 rounded-lg flex items-center gap-1 text-xs font-bold shadow-sm">
+                <span class="material-symbols-outlined filled text-amber-500 !text-sm" aria-hidden="true">star</span>
+                4.5
+              </div>
+            </div>
+            <div class="p-3.5">
+              <h4 class="font-display text-base font-bold">Pizza Place</h4>
+              <div class="mt-1.5 flex items-center gap-1 text-xs text-ink-muted">
+                <span class="material-symbols-outlined !text-sm" aria-hidden="true">error_outline</span>
+                Abre às 18:00
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[420px] z-50 flex justify-around items-center px-3 py-2.5 bg-white/90 backdrop-blur-xl border-t border-paper-line" aria-label="Navegação principal">
+      <a href="home.html" class="flex flex-col items-center gap-0.5 text-brand font-bold bg-brand-soft rounded-xl px-4 py-1.5" aria-current="page">
+        <span class="material-symbols-outlined filled" aria-hidden="true">home</span>
+        <span class="text-[11px] font-bold">Início</span>
+      </a>
+      <a href="#" class="flex flex-col items-center gap-0.5 text-ink-faint hover:text-ink p-2 rounded-xl transition">
+        <span class="material-symbols-outlined" aria-hidden="true">search</span>
+        <span class="text-[11px] font-bold">Buscar</span>
+      </a>
+      <a href="tracking.html" class="flex flex-col items-center gap-0.5 text-ink-faint hover:text-ink p-2 rounded-xl transition">
+        <span class="material-symbols-outlined" aria-hidden="true">shopping_bag</span>
+        <span class="text-[11px] font-bold">Pedidos</span>
+      </a>
+      <a href="#" class="flex flex-col items-center gap-0.5 text-ink-faint hover:text-ink p-2 rounded-xl transition">
+        <span class="material-symbols-outlined" aria-hidden="true">person</span>
+        <span class="text-[11px] font-bold">Perfil</span>
+      </a>
+    </nav>
+
+    <a href="cart.html" class="cart-fab fixed right-[max(1.25rem,calc(50%-210px+1.25rem))] bottom-24 w-14 h-14 rounded-2xl brand-wash text-white shadow-lift grid place-items-center z-40 active:scale-95 transition" aria-label="Carrinho com 2 itens">
+      <span class="material-symbols-outlined" aria-hidden="true">shopping_cart</span>
+      <span class="absolute -top-1.5 -right-1.5 bg-white text-brand text-[10px] font-extrabold w-5 h-5 rounded-full grid place-items-center border-2 border-brand">2</span>
+    </a>
+  </div>
+
+  <script>
+    const categories = document.getElementById("categories");
+    categories?.addEventListener("click", (event) => {
+      const btn = event.target.closest(".category-btn");
+      if (!btn) return;
+      categories.querySelectorAll(".category-btn").forEach((el) => el.classList.remove("is-active"));
+      btn.classList.add("is-active");
+    });
+
+    const topbar = document.getElementById("topbar");
+    const scrollRoot = window.matchMedia("(min-width: 480px)").matches
+      ? document.querySelector(".phone-shell main")
+      : window;
+
+    const onScroll = () => {
+      const y = scrollRoot === window ? window.scrollY : scrollRoot.scrollTop;
+      topbar.classList.toggle("is-scrolled", y > 16);
+    };
+
+    scrollRoot.addEventListener("scroll", onScroll, { passive: true });
+  </script>
+</body>
+</html>

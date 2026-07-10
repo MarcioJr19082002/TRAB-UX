@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>GourmetDash | Checkout</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: "#1565c0",
+              deep: "#0d4a94",
+              bright: "#2b8aef",
+              soft: "#e8f3fc",
+            },
+            ink: {
+              DEFAULT: "#151a22",
+              muted: "#4a5568",
+              faint: "#7a8699",
+            },
+            paper: {
+              DEFAULT: "#f4f7fb",
+              card: "#ffffff",
+              line: "#dce4ef",
+            },
+          },
+          fontFamily: {
+            display: ["Outfit", "sans-serif"],
+            sans: ["Manrope", "sans-serif"],
+          },
+          boxShadow: {
+            soft: "0 8px 28px rgba(21, 26, 34, 0.06)",
+            lift: "0 14px 40px rgba(21, 101, 192, 0.22)",
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    :root {
+      --brand: #1565c0;
+      --paper: #f4f7fb;
+    }
+
+    body {
+      font-family: Manrope, sans-serif;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, #cfe3fb 0%, transparent 55%),
+        linear-gradient(180deg, #f7fafc 0%, #e8eef6 100%);
+      min-height: 100dvh;
+      color: #151a22;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      user-select: none;
+    }
+
+    .material-symbols-outlined.filled {
+      font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+
+    .brand-wash {
+      background:
+        radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.22), transparent 45%),
+        linear-gradient(135deg, #0d4a94 0%, #1565c0 48%, #2b8aef 100%);
+    }
+
+    .phone-shell {
+      width: min(100%, 420px);
+      margin-inline: auto;
+      min-height: 100dvh;
+      background: var(--paper);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    @media (min-width: 480px) {
+      body {
+        display: grid;
+        place-items: center;
+        padding: 2rem 1rem;
+      }
+
+      .phone-shell {
+        min-height: 844px;
+        max-height: 900px;
+        border-radius: 2rem;
+        box-shadow:
+          0 0 0 1px rgba(21, 26, 34, 0.06),
+          0 24px 80px rgba(21, 26, 34, 0.14);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .phone-shell main {
+        overflow-y: auto;
+        flex: 1;
+      }
+    }
+
+    .reveal {
+      animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .reveal-delay-1 { animation-delay: 0.08s; }
+    .reveal-delay-2 { animation-delay: 0.16s; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .address-form {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, opacity 0.25s ease, margin 0.25s ease;
+      margin-top: 0;
+    }
+
+    .address-form.is-open {
+      max-height: 280px;
+      opacity: 1;
+      margin-top: 0.75rem;
+    }
+
+    .field:focus-within label {
+      color: #1565c0;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-shell">
+    <header class="sticky top-0 z-50 flex items-center justify-between px-5 h-16 bg-paper/85 backdrop-blur-md border-b border-paper-line/60">
+      <a href="restaurant.html" class="w-10 h-10 grid place-items-center rounded-full hover:bg-white active:scale-90 transition" aria-label="Voltar">
+        <span class="material-symbols-outlined text-brand" aria-hidden="true">arrow_back</span>
+      </a>
+      <div class="text-center">
+        <h1 class="font-display text-lg font-bold leading-tight">Checkout</h1>
+        <p class="text-[11px] font-bold text-ink-faint uppercase tracking-wider">Passo 1 de 2</p>
+      </div>
+      <div class="w-10" aria-hidden="true"></div>
+    </header>
+
+    <main class="px-5 py-6 pb-28">
+      <div class="w-full bg-paper-line h-1.5 rounded-full mb-7 overflow-hidden reveal">
+        <div class="brand-wash h-full w-1/2 rounded-full transition-all duration-500"></div>
+      </div>
+
+      <section class="space-y-5">
+        <header class="reveal">
+          <h2 class="font-display text-xl font-bold">Endereço de entrega</h2>
+          <p class="text-sm text-ink-muted mt-1.5">Para onde enviamos seu pedido, Fernanda?</p>
+        </header>
+
+        <div class="reveal reveal-delay-1 p-4 rounded-2xl bg-white border-2 border-brand shadow-soft ring-4 ring-brand/10">
+          <div class="flex items-start gap-3">
+            <div class="p-2 bg-brand-soft rounded-xl">
+              <span class="material-symbols-outlined filled text-brand" aria-hidden="true">home</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex justify-between items-center mb-1.5 gap-2">
+                <span class="text-[11px] font-bold text-brand uppercase tracking-wider">Endereço padrão</span>
+                <span class="material-symbols-outlined filled text-brand !text-lg" aria-hidden="true">check_circle</span>
+              </div>
+              <p class="font-display text-base font-bold">Rua das Flores, 123</p>
+              <p class="text-sm text-ink-muted mt-0.5">Apto 42 — Bela Vista, São Paulo</p>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" id="use-address" class="reveal reveal-delay-1 active:scale-[0.98] w-full py-3.5 px-5 rounded-2xl brand-wash text-white font-display text-base font-bold shadow-lift hover:opacity-95 transition flex items-center justify-center gap-1.5">
+          Usar este endereço
+          <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+        </button>
+
+        <div class="flex items-center gap-3 py-1 reveal reveal-delay-2">
+          <div class="h-px flex-1 bg-paper-line"></div>
+          <span class="text-[11px] font-bold text-ink-faint uppercase tracking-wider">ou</span>
+          <div class="h-px flex-1 bg-paper-line"></div>
+        </div>
+
+        <div class="reveal reveal-delay-2">
+          <button type="button" id="toggle-form" class="w-full flex items-center justify-between p-4 rounded-2xl bg-white hover:bg-brand-soft/50 transition group border border-paper-line" aria-expanded="false" aria-controls="address-form">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-ink-faint group-hover:text-brand transition" aria-hidden="true">add_location_alt</span>
+              <span class="text-sm font-bold text-ink">Alterar ou adicionar endereço</span>
+            </div>
+            <span id="toggle-icon" class="material-symbols-outlined text-ink-faint transition-transform" aria-hidden="true">expand_more</span>
+          </button>
+
+          <div id="address-form" class="address-form space-y-3">
+            <div class="field relative">
+              <label class="absolute -top-2 left-3 bg-paper px-1 text-[10px] font-bold text-brand uppercase tracking-wider">Rua e número</label>
+              <input class="w-full bg-white border border-paper-line rounded-xl p-3.5 text-sm outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition" placeholder="Digite o endereço" type="text" />
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="field relative">
+                <label class="absolute -top-2 left-3 bg-paper px-1 text-[10px] font-bold text-ink-faint uppercase tracking-wider">Apto</label>
+                <input class="w-full bg-white border border-paper-line rounded-xl p-3.5 text-sm outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition" placeholder="Opcional" type="text" />
+              </div>
+              <div class="field relative">
+                <label class="absolute -top-2 left-3 bg-paper px-1 text-[10px] font-bold text-ink-faint uppercase tracking-wider">CEP</label>
+                <input class="w-full bg-white border border-paper-line rounded-xl p-3.5 text-sm outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition" placeholder="00000-000" type="text" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-8 reveal reveal-delay-2" aria-label="Mapa">
+        <div class="rounded-2xl overflow-hidden shadow-soft relative h-40 group">
+          <img
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=900&q=80"
+            alt="Mapa da região de entrega em São Paulo"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/30 to-transparent pointer-events-none"></div>
+          <div class="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-soft">
+            <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
+            <span class="text-[11px] font-bold text-ink">Localização: São Paulo</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[420px] px-5 py-3.5 bg-white/90 backdrop-blur-xl border-t border-paper-line z-40">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <span class="material-symbols-outlined text-ink-muted" aria-hidden="true">shopping_basket</span>
+            <span class="absolute -top-1 -right-1 bg-brand text-white text-[8px] font-bold w-4 h-4 grid place-items-center rounded-full">3</span>
+          </div>
+          <div>
+            <p class="text-[11px] font-bold text-ink-faint leading-none mb-0.5">Total do pedido</p>
+            <p class="font-display text-base font-bold">R$ 42,50</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-1 text-brand text-xs font-bold">
+          <span class="material-symbols-outlined !text-sm" aria-hidden="true">schedule</span>
+          25–35 min
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById("toggle-form");
+    const form = document.getElementById("address-form");
+    const toggleIcon = document.getElementById("toggle-icon");
+    const useAddress = document.getElementById("use-address");
+
+    toggleBtn?.addEventListener("click", () => {
+      const open = form.classList.toggle("is-open");
+      toggleBtn.setAttribute("aria-expanded", String(open));
+      toggleIcon.style.transform = open ? "rotate(180deg)" : "";
+    });
+
+    useAddress?.addEventListener("click", () => {
+      useAddress.disabled = true;
+      useAddress.innerHTML = `
+        <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      `;
+      setTimeout(() => {
+        window.location.href = "payment.html";
+      }, 700);
+    });
+  </script>
+</body>
+</html>

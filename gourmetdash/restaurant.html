@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GourmetDash | Burger House</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: "#1565c0",
+              deep: "#0d4a94",
+              bright: "#2b8aef",
+              soft: "#e8f3fc",
+            },
+            ink: {
+              DEFAULT: "#151a22",
+              muted: "#4a5568",
+              faint: "#7a8699",
+            },
+            paper: {
+              DEFAULT: "#f4f7fb",
+              card: "#ffffff",
+              line: "#dce4ef",
+            },
+          },
+          fontFamily: {
+            display: ["Outfit", "sans-serif"],
+            sans: ["Manrope", "sans-serif"],
+          },
+          boxShadow: {
+            soft: "0 8px 28px rgba(26, 28, 29, 0.06)",
+            lift: "0 14px 40px rgba(21, 101, 192, 0.18)",
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    :root {
+      --brand: #1565c0;
+      --paper: #f4f7fb;
+    }
+
+    body {
+      font-family: Manrope, sans-serif;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, #cfe3fb 0%, transparent 55%),
+        linear-gradient(180deg, #f7fafc 0%, #e8eef6 100%);
+      min-height: 100dvh;
+      color: #151a22;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      user-select: none;
+    }
+
+    .material-symbols-outlined.filled {
+      font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .brand-wash {
+      background:
+        radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.22), transparent 45%),
+        linear-gradient(135deg, #0d4a94 0%, #1565c0 48%, #2b8aef 100%);
+    }
+
+    .phone-shell {
+      width: min(100%, 420px);
+      margin-inline: auto;
+      min-height: 100dvh;
+      background: var(--paper);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    @media (min-width: 480px) {
+      body {
+        display: grid;
+        place-items: center;
+        padding: 2rem 1rem;
+      }
+
+      .phone-shell {
+        min-height: 844px;
+        max-height: 900px;
+        border-radius: 2rem;
+        box-shadow:
+          0 0 0 1px rgba(26, 28, 29, 0.06),
+          0 24px 80px rgba(26, 28, 29, 0.14);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .phone-shell main {
+        overflow-y: auto;
+        flex: 1;
+      }
+    }
+
+    .tab-btn.is-active {
+      background: linear-gradient(135deg, #0d4a94 0%, #1565c0 48%, #2b8aef 100%);
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(21, 101, 192, 0.22);
+    }
+
+    .reveal {
+      animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .reveal-delay-1 { animation-delay: 0.08s; }
+    .reveal-delay-2 { animation-delay: 0.16s; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .topnav.is-solid {
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 4px 20px rgba(26, 28, 29, 0.06);
+    }
+
+    .topnav.is-solid .nav-btn {
+      background: #e8eef6;
+      color: #151a22;
+    }
+
+    .qty-controls {
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .qty-controls.is-visible {
+      display: flex;
+    }
+
+    .add-only.is-hidden {
+      display: none;
+    }
+
+    .cart-bar {
+      left: 50%;
+      transform: translate(-50%, 120%);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+    }
+
+    .cart-bar.is-visible {
+      transform: translate(-50%, 0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .fav-btn.is-liked {
+      color: #1565c0;
+    }
+
+    .fav-btn.is-liked .material-symbols-outlined {
+      font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-shell">
+    <nav id="topnav" class="topnav absolute top-0 left-0 right-0 z-50 flex justify-between items-center px-5 h-16 transition-all duration-300">
+      <a href="home.html" class="nav-btn w-10 h-10 grid place-items-center rounded-full bg-white/90 text-ink shadow-soft backdrop-blur active:scale-90 transition" aria-label="Voltar">
+        <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+      </a>
+      <div class="flex gap-2">
+        <button type="button" id="fav-btn" class="fav-btn nav-btn w-10 h-10 grid place-items-center rounded-full bg-white/90 text-ink shadow-soft backdrop-blur active:scale-90 transition" aria-label="Favoritar">
+          <span class="material-symbols-outlined" aria-hidden="true">favorite</span>
+        </button>
+        <button type="button" class="nav-btn w-10 h-10 grid place-items-center rounded-full bg-white/90 text-ink shadow-soft backdrop-blur active:scale-90 transition" aria-label="Compartilhar">
+          <span class="material-symbols-outlined" aria-hidden="true">share</span>
+        </button>
+      </div>
+    </nav>
+
+    <main class="pb-36">
+      <header class="relative w-full h-[280px] overflow-hidden">
+        <img
+          class="absolute inset-0 w-full h-full object-cover"
+          src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=1000&q=80"
+          alt="Interior e pratos do Burger House"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/20 to-transparent"></div>
+      </header>
+
+      <div class="relative -mt-14 mx-5 p-4 bg-white rounded-2xl shadow-soft z-10 reveal">
+        <div class="flex justify-between items-start gap-3">
+          <div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-brand mb-1">GourmetDash</p>
+            <h1 class="font-display text-2xl font-extrabold tracking-tight leading-tight">Burger House</h1>
+          </div>
+          <div class="flex items-center gap-1 px-2 py-1 bg-brand-soft rounded-lg shrink-0">
+            <span class="material-symbols-outlined filled text-brand !text-lg" aria-hidden="true">star</span>
+            <span class="text-xs font-bold text-brand">4.8</span>
+          </div>
+        </div>
+
+        <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-ink-muted">
+          <span class="inline-flex items-center gap-1">
+            <span class="material-symbols-outlined !text-[18px]" aria-hidden="true">schedule</span>
+            20–30 min
+          </span>
+          <span class="inline-flex items-center gap-1">
+            <span class="material-symbols-outlined !text-[18px]" aria-hidden="true">distance</span>
+            1,2 km
+          </span>
+          <span class="inline-flex items-center gap-1">
+            <span class="material-symbols-outlined !text-[18px]" aria-hidden="true">payments</span>
+            $$
+          </span>
+          <span class="inline-flex items-center gap-1 text-brand font-bold">
+            <span class="material-symbols-outlined !text-[18px]" aria-hidden="true">delivery_dining</span>
+            Entrega grátis
+          </span>
+        </div>
+
+        <p class="mt-3 pt-3 border-t border-paper-line text-sm text-ink-muted leading-relaxed">
+          Os melhores burgers gourmet da cidade. Ingredientes frescos, pães artesanais e molhos exclusivos.
+        </p>
+      </div>
+
+      <section class="mt-6 reveal reveal-delay-1" aria-label="Categorias do cardápio">
+        <div id="menu-tabs" class="flex gap-2 px-5 overflow-x-auto no-scrollbar">
+          <button type="button" class="tab-btn is-active whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-[#efeae6] text-ink-muted transition active:scale-95" data-target="entradas">Entradas</button>
+          <button type="button" class="tab-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-[#efeae6] text-ink-muted transition active:scale-95" data-target="principais">Principais</button>
+          <button type="button" class="tab-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-[#efeae6] text-ink-muted transition active:scale-95" data-target="bebidas">Bebidas</button>
+          <button type="button" class="tab-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold bg-[#efeae6] text-ink-muted transition active:scale-95" data-target="sobremesas">Sobremesas</button>
+        </div>
+      </section>
+
+      <section id="entradas" class="menu-section mt-6 px-5 reveal reveal-delay-2">
+        <h2 class="font-display text-lg font-bold mb-3">Entradas</h2>
+        <article class="menu-item flex bg-white rounded-2xl overflow-hidden shadow-soft group" data-id="fries" data-name="Batata crocante" data-price="12">
+          <div class="flex-1 p-3.5 flex flex-col justify-between min-w-0">
+            <div>
+              <h3 class="font-bold text-[15px] text-ink mb-1">Batata crocante</h3>
+              <p class="text-xs text-ink-muted line-clamp-2 leading-relaxed">Batatas douradas, fritas duas vezes, com sal marinho e alecrim.</p>
+            </div>
+            <div class="flex justify-between items-center mt-3">
+              <span class="font-display text-base font-bold">R$ 12,00</span>
+              <button type="button" class="add-only w-8 h-8 grid place-items-center rounded-xl brand-wash text-white shadow-sm active:scale-90 transition" aria-label="Adicionar Batata crocante">
+                <span class="material-symbols-outlined !text-[20px]" aria-hidden="true">add</span>
+              </button>
+              <div class="qty-controls">
+                <button type="button" class="qty-minus w-8 h-8 grid place-items-center rounded-xl bg-[#efeae6] text-ink active:scale-90 transition" aria-label="Diminuir">
+                  <span class="material-symbols-outlined !text-[20px]" aria-hidden="true">remove</span>
+                </button>
+                <span class="qty-value text-xs font-bold w-4 text-center">0</span>
+                <button type="button" class="qty-plus w-8 h-8 grid place-items-center rounded-xl brand-wash text-white shadow-sm active:scale-90 transition" aria-label="Aumentar">
+                  <span class="material-symbols-outlined !text-[20px]" aria-hidden="true">add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="w-28 h-28 sm:w-32 sm:h-32 overflow-hidden shrink-0">
+            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=400&q=80" alt="Batata frita crocante" />
+          </div>
+        </article>
+      </section>
+
+      <section id="principais" class="menu-section mt-8 px-5">
+        <h2 class="font-display text-lg font-bold mb-3">Principais</h2>
+        <div class="flex flex-col gap-3">
+          <article class="menu-item flex bg-white rounded-2xl overflow-hidden shadow-soft group" data-id="classic" data-name="Classic Burger" data-price="25">
+            <div class="flex-1 p-3.5 flex flex-col justify-between min-w-0">
+              <div>
+                <div class="flex items-center gap-2 mb-1 flex-wrap">
+                  <h3 class="font-bold text-[15px] text-ink">Classic Burger</h3>
+                  <span class="px-1.5 py-0.5 rounded-md bg-brand-soft text-brand text-[10px] font-bold uppercase tracking-wider">Popular</span>
+                </div>
+                <p class="text-xs text-ink-muted line-clamp-2 leading-relaxed">Blend suculento, cheddar maturado, alface, tomate e molho secreto da casa.</p>
+              </div>
+              <div class="flex justify-between items-center mt-3">
+                <span class="font-display text-base font-bold">R$ 25,00</span>
+                <button type="button" class="add-only w-8 h-8 grid place-items-center rounded-xl brand-wash text-white shadow-sm active:scale-90 transition" aria-label="Adicionar Classic Burger">
+                  <span class="material-symbols-outlined !text-[20px]" aria-hidden="true">add</span>
+                </button>
+                <div class="qty-controls">
+                  <button type="button" class="qty-minus w-8 h-8 grid place-items-center rounded-xl bg-[#efeae6] text-ink active:scale-90 transition" aria-label="Diminuir">
+                    <span class="material-symbols-outlined !text-[20px]" aria-hidden="true">remove</span>
+                  </button>
+                  <span class="qty-value text-xs font-bold w-4 text-center">0</span>
+                  <button type="button" class="qty-plus w-8 h-8 grid place-items-center rounded-xl brand-wash text-white shadow-sm active:scale-90 transition" aria-label="Aumentar">
+                    <span class="material-symbols-outlined !text-[20px]" aria-hidden="true">add</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="w-28 h-28 sm:w-32 sm:h-32 overflow-hidden shrink-0">
+              <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80" alt="Classic Burger" />
+            </div>
+          </article>
+
+          <article class="menu-item flex bg-white rounded-2xl overflow-hidden shadow-soft group" data-id="bbq" data-name="BBQ Smokehouse" data-price="28">
+            <div class="flex-1 p-3.5 flex flex-col justify-between min-w-0">
+              <div>
+                <h3 class="font-bold text-[15px] text-ink mb-1">BBQ Smokehouse</h3>
+                <p class="text-xs text-ink-muted line-clamp-2 leading-relaxed">Bacon defumado, onion rings, molho BBQ e queijo Monterey Jack.</p>
+              </div>
+              <div class="flex justify-between items-center mt-3">
+                <span class="font-display text-base font-bold">R$ 28,00</span>
+                <button type="button" class="add-only w-8 h-8 grid place-items-center rounded-xl brand-wash text-white shadow-sm active:scale-90 transition" aria-label="Adicionar BBQ Smokehouse">
+                  <span class="material-symbols-outlined !text-[20px]" aria-hidden="true">add</span>
+                </button>
+                <div class="qty-controls">
+                  <button type="button" class="qty-minus w-8 h-8 grid place-items-center rounded-xl bg-[#efeae6] text-ink active:scale-90 transition" aria-label="Diminuir">
+                    <span class="material-symbols-outlined !text-[20px]" aria-hidden="true">remove</span>
+                  </button>
+                  <span class="qty-value text-xs font-bold w-4 text-center">0</span>
+                  <button type="button" class="qty-plus w-8 h-8 grid place-items-center rounded-xl brand-wash text-white shadow-sm active:scale-90 transition" aria-label="Aumentar">
+                    <span class="material-symbols-outlined !text-[20px]" aria-hidden="true">add</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="w-28 h-28 sm:w-32 sm:h-32 overflow-hidden shrink-0">
+              <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=400&q=80" alt="BBQ Smokehouse" />
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="bebidas" class="menu-section mt-8 px-5">
+        <h2 class="font-display text-lg font-bold mb-3">Bebidas</h2>
+        <div class="grid grid-cols-2 gap-3">
+          <article class="menu-item bg-white rounded-2xl overflow-hidden shadow-soft p-3 flex flex-col" data-id="tea" data-name="Chá gelado limão" data-price="5">
+            <div class="w-full aspect-square mb-2.5 overflow-hidden rounded-xl">
+              <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=400&q=80" alt="Chá gelado com limão" />
+            </div>
+            <h3 class="font-bold text-xs text-ink text-center">Chá gelado limão</h3>
+            <div class="mt-2 flex items-center justify-between gap-2">
+              <span class="font-display text-sm font-bold text-brand">R$ 5,00</span>
+              <button type="button" class="add-only w-8 h-8 grid place-items-center rounded-xl brand-wash text-white shadow-sm active:scale-90 transition" aria-label="Adicionar Chá gelado">
+                <span class="material-symbols-outlined !text-[18px]" aria-hidden="true">add</span>
+              </button>
+              <div class="qty-controls">
+                <button type="button" class="qty-minus w-7 h-7 grid place-items-center rounded-lg bg-[#efeae6] text-ink active:scale-90 transition" aria-label="Diminuir">
+                  <span class="material-symbols-outlined !text-[16px]" aria-hidden="true">remove</span>
+                </button>
+                <span class="qty-value text-xs font-bold w-3 text-center">0</span>
+                <button type="button" class="qty-plus w-7 h-7 grid place-items-center rounded-lg brand-wash text-white active:scale-90 transition" aria-label="Aumentar">
+                  <span class="material-symbols-outlined !text-[16px]" aria-hidden="true">add</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-item bg-white rounded-2xl overflow-hidden shadow-soft p-3 flex flex-col" data-id="soda" data-name="Craft Soda" data-price="6.5">
+            <div class="w-full aspect-square mb-2.5 overflow-hidden rounded-xl">
+              <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1629203851122-5031f96b0cd5?auto=format&fit=crop&w=400&q=80" alt="Refrigerante artesanal" />
+            </div>
+            <h3 class="font-bold text-xs text-ink text-center">Craft Soda</h3>
+            <div class="mt-2 flex items-center justify-between gap-2">
+              <span class="font-display text-sm font-bold text-brand">R$ 6,50</span>
+              <button type="button" class="add-only w-8 h-8 grid place-items-center rounded-xl brand-wash text-white shadow-sm active:scale-90 transition" aria-label="Adicionar Craft Soda">
+                <span class="material-symbols-outlined !text-[18px]" aria-hidden="true">add</span>
+              </button>
+              <div class="qty-controls">
+                <button type="button" class="qty-minus w-7 h-7 grid place-items-center rounded-lg bg-[#efeae6] text-ink active:scale-90 transition" aria-label="Diminuir">
+                  <span class="material-symbols-outlined !text-[16px]" aria-hidden="true">remove</span>
+                </button>
+                <span class="qty-value text-xs font-bold w-3 text-center">0</span>
+                <button type="button" class="qty-plus w-7 h-7 grid place-items-center rounded-lg brand-wash text-white active:scale-90 transition" aria-label="Aumentar">
+                  <span class="material-symbols-outlined !text-[16px]" aria-hidden="true">add</span>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="sobremesas" class="menu-section mt-8 px-5 pb-4">
+        <h2 class="font-display text-lg font-bold mb-3">Sobremesas</h2>
+        <article class="menu-item flex bg-white rounded-2xl overflow-hidden shadow-soft group" data-id="brownie" data-name="Brownie quente" data-price="14">
+          <div class="flex-1 p-3.5 flex flex-col justify-between min-w-0">
+            <div>
+              <h3 class="font-bold text-[15px] text-ink mb-1">Brownie quente</h3>
+              <p class="text-xs text-ink-muted line-clamp-2 leading-relaxed">Brownie de chocolate belga com sorvete de baunilha e calda.</p>
+            </div>
+            <div class="flex justify-between items-center mt-3">
+              <span class="font-display text-base font-bold">R$ 14,00</span>
+              <button type="button" class="add-only w-8 h-8 grid place-items-center rounded-xl brand-wash text-white shadow-sm active:scale-90 transition" aria-label="Adicionar Brownie">
+                <span class="material-symbols-outlined !text-[20px]" aria-hidden="true">add</span>
+              </button>
+              <div class="qty-controls">
+                <button type="button" class="qty-minus w-8 h-8 grid place-items-center rounded-xl bg-[#efeae6] text-ink active:scale-90 transition" aria-label="Diminuir">
+                  <span class="material-symbols-outlined !text-[20px]" aria-hidden="true">remove</span>
+                </button>
+                <span class="qty-value text-xs font-bold w-4 text-center">0</span>
+                <button type="button" class="qty-plus w-8 h-8 grid place-items-center rounded-xl brand-wash text-white shadow-sm active:scale-90 transition" aria-label="Aumentar">
+                  <span class="material-symbols-outlined !text-[20px]" aria-hidden="true">add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="w-28 h-28 sm:w-32 sm:h-32 overflow-hidden shrink-0">
+            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=400&q=80" alt="Brownie com sorvete" />
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <div id="cart-bar" class="cart-bar fixed bottom-6 w-full max-w-[420px] px-5 z-[60]">
+      <a href="cart.html" class="w-full h-14 brand-wash rounded-2xl shadow-lift flex items-center justify-between px-4 active:scale-[0.98] transition group">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white/20 backdrop-blur grid place-items-center">
+            <span class="material-symbols-outlined filled text-white" aria-hidden="true">shopping_bag</span>
+          </div>
+          <div class="text-left">
+            <p class="text-white/75 text-[10px] uppercase font-bold tracking-widest leading-none mb-1">Seu pedido</p>
+            <p id="cart-count" class="text-white text-xs font-bold">0 itens</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span id="cart-total" class="text-white font-display text-base font-bold">R$ 0,00</span>
+          <span class="material-symbols-outlined text-white !text-lg group-hover:translate-x-0.5 transition-transform" aria-hidden="true">arrow_forward_ios</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const cart = {};
+    const cartBar = document.getElementById("cart-bar");
+    const cartCount = document.getElementById("cart-count");
+    const cartTotal = document.getElementById("cart-total");
+    const topnav = document.getElementById("topnav");
+    const main = document.querySelector(".phone-shell main");
+    const isDesktop = window.matchMedia("(min-width: 480px)").matches;
+    const scrollRoot = isDesktop ? main : window;
+
+    function formatBRL(value) {
+      return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    }
+
+    function updateCartUI() {
+      let items = 0;
+      let total = 0;
+
+      document.querySelectorAll(".menu-item").forEach((item) => {
+        const id = item.dataset.id;
+        const qty = cart[id] || 0;
+        const price = Number(item.dataset.price);
+        const addOnly = item.querySelector(".add-only");
+        const controls = item.querySelector(".qty-controls");
+        const valueEl = item.querySelector(".qty-value");
+
+        if (qty > 0) {
+          addOnly.classList.add("is-hidden");
+          controls.classList.add("is-visible");
+          valueEl.textContent = String(qty);
+          items += qty;
+          total += qty * price;
+        } else {
+          addOnly.classList.remove("is-hidden");
+          controls.classList.remove("is-visible");
+          valueEl.textContent = "0";
+        }
+      });
+
+      cartCount.textContent = items === 1 ? "1 item" : `${items} itens`;
+      cartTotal.textContent = formatBRL(total);
+      cartBar.classList.toggle("is-visible", items > 0);
+    }
+
+    function changeQty(item, delta) {
+      const id = item.dataset.id;
+      const next = Math.max(0, (cart[id] || 0) + delta);
+      if (next === 0) delete cart[id];
+      else cart[id] = next;
+      updateCartUI();
+    }
+
+    document.querySelectorAll(".menu-item").forEach((item) => {
+      item.querySelector(".add-only")?.addEventListener("click", () => changeQty(item, 1));
+      item.querySelector(".qty-plus")?.addEventListener("click", () => changeQty(item, 1));
+      item.querySelector(".qty-minus")?.addEventListener("click", () => changeQty(item, -1));
+    });
+
+    document.getElementById("menu-tabs")?.addEventListener("click", (event) => {
+      const btn = event.target.closest(".tab-btn");
+      if (!btn) return;
+      document.querySelectorAll(".tab-btn").forEach((el) => el.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      const target = document.getElementById(btn.dataset.target);
+      if (!target) return;
+      const top = isDesktop
+        ? target.offsetTop - 8
+        : target.getBoundingClientRect().top + window.scrollY - 72;
+      scrollRoot.scrollTo({ top, behavior: "smooth" });
+    });
+
+    document.getElementById("fav-btn")?.addEventListener("click", function () {
+      this.classList.toggle("is-liked");
+    });
+
+    const onScroll = () => {
+      const y = scrollRoot === window ? window.scrollY : scrollRoot.scrollTop;
+      topnav.classList.toggle("is-solid", y > 180);
+    };
+
+    scrollRoot.addEventListener("scroll", onScroll, { passive: true });
+  </script>
+</body>
+</html>

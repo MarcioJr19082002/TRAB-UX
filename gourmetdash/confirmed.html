@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GourmetDash | Pedido confirmado</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: "#1565c0",
+              deep: "#0d4a94",
+              bright: "#2b8aef",
+              soft: "#e8f3fc",
+            },
+            ink: {
+              DEFAULT: "#151a22",
+              muted: "#4a5568",
+              faint: "#7a8699",
+            },
+            paper: {
+              DEFAULT: "#f4f7fb",
+              card: "#ffffff",
+              line: "#dce4ef",
+            },
+          },
+          fontFamily: {
+            display: ["Outfit", "sans-serif"],
+            sans: ["Manrope", "sans-serif"],
+          },
+          boxShadow: {
+            soft: "0 8px 28px rgba(21, 26, 34, 0.06)",
+            lift: "0 14px 40px rgba(21, 101, 192, 0.22)",
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    :root {
+      --brand: #1565c0;
+      --paper: #f4f7fb;
+    }
+
+    body {
+      font-family: Manrope, sans-serif;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, #cfe3fb 0%, transparent 55%),
+        linear-gradient(180deg, #f7fafc 0%, #e8eef6 100%);
+      min-height: 100dvh;
+      color: #151a22;
+      overflow-x: hidden;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      user-select: none;
+    }
+
+    .material-symbols-outlined.filled {
+      font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+
+    .brand-wash {
+      background:
+        radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.22), transparent 45%),
+        linear-gradient(135deg, #0d4a94 0%, #1565c0 48%, #2b8aef 100%);
+    }
+
+    .phone-shell {
+      width: min(100%, 420px);
+      margin-inline: auto;
+      min-height: 100dvh;
+      background: var(--paper);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 480px) {
+      body {
+        display: grid;
+        place-items: center;
+        padding: 2rem 1rem;
+      }
+
+      .phone-shell {
+        min-height: 844px;
+        max-height: 900px;
+        border-radius: 2rem;
+        box-shadow:
+          0 0 0 1px rgba(21, 26, 34, 0.06),
+          0 24px 80px rgba(21, 26, 34, 0.14);
+      }
+    }
+
+    .success-bounce {
+      animation: soft-bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes soft-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .confetti {
+      position: absolute;
+      border-radius: 2px;
+      animation: fall linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .reveal {
+      animation: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .reveal-delay-1 { animation-delay: 0.1s; }
+    .reveal-delay-2 { animation-delay: 0.2s; }
+    .reveal-delay-3 { animation-delay: 0.3s; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .check-pop {
+      animation: pop 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes pop {
+      from { opacity: 0; transform: scale(0.6); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-shell">
+    <div class="absolute inset-0 pointer-events-none z-20 overflow-hidden" id="confetti-container" aria-hidden="true"></div>
+
+    <main class="relative z-10 min-h-[100dvh] md:min-h-[844px] flex flex-col items-center justify-center px-6 py-10 text-center">
+      <div class="relative mb-7 check-pop">
+        <div class="absolute inset-0 bg-brand/20 blur-3xl rounded-full scale-150"></div>
+        <div class="relative w-28 h-28 brand-wash rounded-full grid place-items-center shadow-lift success-bounce">
+          <span class="material-symbols-outlined filled text-white !text-[64px]" aria-hidden="true">check_circle</span>
+        </div>
+      </div>
+
+      <div class="space-y-2 mb-8 reveal">
+        <h1 class="font-display text-3xl font-extrabold tracking-tight text-ink">Pedido confirmado!</h1>
+        <p class="text-sm text-ink-muted max-w-[280px] mx-auto leading-relaxed">
+          Sua refeição está sendo preparada com carinho e chega em breve.
+        </p>
+      </div>
+
+      <div class="w-full grid grid-cols-2 gap-3 mb-6 reveal reveal-delay-1">
+        <div class="bg-white p-3.5 rounded-2xl shadow-soft text-left">
+          <span class="text-[10px] font-bold text-ink-faint uppercase tracking-wider">Pedido</span>
+          <p class="font-display text-lg font-bold text-brand mt-1">#8273</p>
+        </div>
+        <div class="bg-white p-3.5 rounded-2xl shadow-soft text-left">
+          <span class="text-[10px] font-bold text-ink-faint uppercase tracking-wider">Chegada</span>
+          <div class="flex items-center gap-1 mt-1">
+            <span class="material-symbols-outlined text-brand !text-xl" aria-hidden="true">schedule</span>
+            <span class="font-display text-base font-bold">25–35 min</span>
+          </div>
+        </div>
+
+        <div class="col-span-2 relative h-36 rounded-2xl overflow-hidden shadow-soft">
+          <img
+            class="absolute inset-0 w-full h-full object-cover"
+            src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=900&q=80"
+            alt="Mapa da região de entrega"
+          />
+          <div class="absolute inset-0 bg-ink/25 grid place-items-center">
+            <div class="bg-white/95 backdrop-blur-md px-4 py-2 rounded-xl flex items-center gap-2 shadow-soft">
+              <span class="material-symbols-outlined text-brand" aria-hidden="true">directions_bike</span>
+              <span class="text-xs font-bold text-ink">Entregador sendo atribuído</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full flex flex-col gap-2.5 reveal reveal-delay-2">
+        <a href="tracking.html" class="brand-wash text-white py-3.5 rounded-2xl font-display font-bold shadow-lift active:scale-[0.98] transition text-center">
+          Acompanhar pedido
+        </a>
+        <a href="home.html" class="bg-[#eef1f5] text-ink py-3.5 rounded-2xl font-display font-bold hover:bg-paper-line active:scale-[0.98] transition text-center">
+          Voltar ao início
+        </a>
+      </div>
+
+      <div class="mt-7 flex items-center justify-center gap-1.5 text-ink-faint reveal reveal-delay-3">
+        <span class="material-symbols-outlined text-brand !text-lg" aria-hidden="true">info</span>
+        <span class="text-xs">O recibo completo fica em Pedidos</span>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const container = document.getElementById("confetti-container");
+    const colors = ["#1565c0", "#2b8aef", "#0d4a94", "#0e7490", "#93c5fd", "#bfdbfe"];
+
+    function createConfetti() {
+      if (!container) return;
+      for (let i = 0; i < 42; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti";
+        const size = Math.random() * 8 + 4;
+        const duration = Math.random() * 2.5 + 2;
+        const delay = Math.random() * 1.2;
+        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.left = `${Math.random() * 100}%`;
+        piece.style.top = "-16px";
+        piece.style.width = `${size}px`;
+        piece.style.height = `${size}px`;
+        piece.style.animationDuration = `${duration}s`;
+        piece.style.animationDelay = `${delay}s`;
+        container.appendChild(piece);
+        setTimeout(() => piece.remove(), (duration + delay) * 1000);
+      }
+    }
+
+    createConfetti();
+    setInterval(createConfetti, 7000);
+  </script>
+</body>
+</html>
