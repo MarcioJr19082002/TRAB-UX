@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GourmetDash | Perfil</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT: "#1565c0", deep: "#0d4a94", bright: "#2b8aef", soft: "#e8f3fc" },
+            ink: { DEFAULT: "#151a22", muted: "#4a5568", faint: "#7a8699" },
+            paper: { DEFAULT: "#f4f7fb", card: "#ffffff", line: "#dce4ef" },
+          },
+          fontFamily: { display: ["Outfit", "sans-serif"], sans: ["Manrope", "sans-serif"] },
+          boxShadow: {
+            soft: "0 8px 28px rgba(21, 26, 34, 0.06)",
+            lift: "0 14px 40px rgba(21, 101, 192, 0.22)",
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body {
+      font-family: Manrope, sans-serif;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, #cfe3fb 0%, transparent 55%),
+        linear-gradient(180deg, #f7fafc 0%, #e8eef6 100%);
+      min-height: 100dvh;
+      color: #151a22;
+    }
+    .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; user-select: none; }
+    .material-symbols-outlined.filled { font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24; }
+    .brand-wash {
+      background:
+        radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.22), transparent 45%),
+        linear-gradient(135deg, #0d4a94 0%, #1565c0 48%, #2b8aef 100%);
+    }
+    .phone-shell {
+      width: min(100%, 430px);
+      margin-inline: auto;
+      min-height: 100dvh;
+      background: #f4f7fb;
+      position: relative;
+      overflow-x: hidden;
+    }
+    @media (min-width: 480px) {
+      body { display: grid; place-items: center; padding: 2rem 1rem; }
+      .phone-shell {
+        width: 430px;
+        height: calc(100dvh - 2.5rem);
+        min-height: calc(100dvh - 2.5rem);
+        max-height: calc(100dvh - 2.5rem); border-radius: 2rem;
+        box-shadow: 0 0 0 1px rgba(21, 26, 34, 0.06), 0 24px 80px rgba(21, 26, 34, 0.14);
+        overflow: hidden; display: flex; flex-direction: column;
+      }
+      .phone-shell main { overflow-y: auto; flex: 1; }
+    }
+    .reveal { animation: rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-shell">
+    <header class="sticky top-0 z-50 flex items-center justify-between px-5 h-16 bg-paper/90 backdrop-blur-md border-b border-paper-line/60">
+      <h1 class="font-display text-xl font-extrabold">Perfil</h1>
+      <button type="button" class="w-10 h-10 grid place-items-center rounded-full hover:bg-white active:scale-90 transition" aria-label="Configurações">
+        <span class="material-symbols-outlined text-ink-muted" aria-hidden="true">settings</span>
+      </button>
+    </header>
+
+    <main class="px-5 py-5 pb-28">
+      <section class="reveal flex items-center gap-4 mb-6">
+        <div class="relative">
+          <img
+            class="w-16 h-16 rounded-2xl object-cover shadow-soft"
+            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80"
+            alt="Fernanda"
+          />
+          <span class="absolute -bottom-1 -right-1 w-6 h-6 rounded-lg brand-wash text-white grid place-items-center">
+            <span class="material-symbols-outlined !text-sm" aria-hidden="true">edit</span>
+          </span>
+        </div>
+        <div class="min-w-0">
+          <h2 class="font-display text-lg font-bold truncate">Fernanda Silva</h2>
+          <p class="text-sm text-ink-muted truncate">fernanda@email.com</p>
+          <p class="text-xs text-brand font-bold mt-1">Membro desde 2024</p>
+        </div>
+      </section>
+
+      <section class="grid grid-cols-3 gap-2.5 mb-6 reveal">
+        <div class="bg-white rounded-2xl p-3 text-center shadow-soft border border-paper-line">
+          <p class="font-display text-lg font-extrabold text-brand">12</p>
+          <p class="text-[10px] font-bold text-ink-faint uppercase tracking-wide mt-0.5">Pedidos</p>
+        </div>
+        <div class="bg-white rounded-2xl p-3 text-center shadow-soft border border-paper-line">
+          <p class="font-display text-lg font-extrabold text-brand">3</p>
+          <p class="text-[10px] font-bold text-ink-faint uppercase tracking-wide mt-0.5">Favoritos</p>
+        </div>
+        <div class="bg-white rounded-2xl p-3 text-center shadow-soft border border-paper-line">
+          <p class="font-display text-lg font-extrabold text-brand">R$ 48</p>
+          <p class="text-[10px] font-bold text-ink-faint uppercase tracking-wide mt-0.5">Créditos</p>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-2xl overflow-hidden shadow-soft border border-paper-line mb-4 reveal">
+        <a href="checkout.html" class="flex items-center gap-3 px-4 py-3.5 hover:bg-brand-soft/40 transition border-b border-paper-line">
+          <span class="w-9 h-9 rounded-xl bg-brand-soft text-brand grid place-items-center">
+            <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+          </span>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-bold">Endereços</p>
+            <p class="text-xs text-ink-muted truncate">Rua das Flores, 123</p>
+          </div>
+          <span class="material-symbols-outlined text-ink-faint" aria-hidden="true">chevron_right</span>
+        </a>
+        <a href="payment.html" class="flex items-center gap-3 px-4 py-3.5 hover:bg-brand-soft/40 transition border-b border-paper-line">
+          <span class="w-9 h-9 rounded-xl bg-brand-soft text-brand grid place-items-center">
+            <span class="material-symbols-outlined" aria-hidden="true">credit_card</span>
+          </span>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-bold">Pagamentos</p>
+            <p class="text-xs text-ink-muted truncate">Visa final 1234</p>
+          </div>
+          <span class="material-symbols-outlined text-ink-faint" aria-hidden="true">chevron_right</span>
+        </a>
+        <a href="tracking.html" class="flex items-center gap-3 px-4 py-3.5 hover:bg-brand-soft/40 transition">
+          <span class="w-9 h-9 rounded-xl bg-brand-soft text-brand grid place-items-center">
+            <span class="material-symbols-outlined" aria-hidden="true">receipt_long</span>
+          </span>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-bold">Histórico de pedidos</p>
+            <p class="text-xs text-ink-muted truncate">Pedido #8273 a caminho</p>
+          </div>
+          <span class="material-symbols-outlined text-ink-faint" aria-hidden="true">chevron_right</span>
+        </a>
+      </section>
+
+      <section class="bg-white rounded-2xl overflow-hidden shadow-soft border border-paper-line mb-4 reveal">
+        <button type="button" class="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-brand-soft/40 transition border-b border-paper-line text-left">
+          <span class="w-9 h-9 rounded-xl bg-[#eef1f5] text-ink-muted grid place-items-center">
+            <span class="material-symbols-outlined" aria-hidden="true">notifications</span>
+          </span>
+          <span class="flex-1 text-sm font-bold">Notificações</span>
+          <span class="material-symbols-outlined text-ink-faint" aria-hidden="true">chevron_right</span>
+        </button>
+        <button type="button" class="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-brand-soft/40 transition border-b border-paper-line text-left">
+          <span class="w-9 h-9 rounded-xl bg-[#eef1f5] text-ink-muted grid place-items-center">
+            <span class="material-symbols-outlined" aria-hidden="true">help</span>
+          </span>
+          <span class="flex-1 text-sm font-bold">Ajuda e suporte</span>
+          <span class="material-symbols-outlined text-ink-faint" aria-hidden="true">chevron_right</span>
+        </button>
+        <button type="button" class="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-brand-soft/40 transition text-left">
+          <span class="w-9 h-9 rounded-xl bg-[#eef1f5] text-ink-muted grid place-items-center">
+            <span class="material-symbols-outlined" aria-hidden="true">info</span>
+          </span>
+          <span class="flex-1 text-sm font-bold">Sobre o GourmetDash</span>
+          <span class="material-symbols-outlined text-ink-faint" aria-hidden="true">chevron_right</span>
+        </button>
+      </section>
+
+      <button type="button" id="logout-btn" class="w-full py-3.5 rounded-2xl bg-[#fee2e2] text-[#b91c1c] text-sm font-bold active:scale-[0.98] transition">
+        Sair da conta
+      </button>
+    </main>
+
+    <nav class="absolute bottom-0 left-0 right-0 z-50 flex justify-around items-center px-3 py-2.5 bg-white/90 backdrop-blur-xl border-t border-paper-line" aria-label="Navegação principal">
+      <a href="home.html" class="flex flex-col items-center gap-0.5 text-ink-faint hover:text-ink p-2 rounded-xl transition">
+        <span class="material-symbols-outlined" aria-hidden="true">home</span>
+        <span class="text-[11px] font-bold">Início</span>
+      </a>
+      <a href="search.html" class="flex flex-col items-center gap-0.5 text-ink-faint hover:text-ink p-2 rounded-xl transition">
+        <span class="material-symbols-outlined" aria-hidden="true">search</span>
+        <span class="text-[11px] font-bold">Buscar</span>
+      </a>
+      <a href="tracking.html" class="flex flex-col items-center gap-0.5 text-ink-faint hover:text-ink p-2 rounded-xl transition">
+        <span class="material-symbols-outlined" aria-hidden="true">shopping_bag</span>
+        <span class="text-[11px] font-bold">Pedidos</span>
+      </a>
+      <a href="profile.html" class="flex flex-col items-center gap-0.5 text-brand font-bold bg-brand-soft rounded-xl px-4 py-1.5" aria-current="page">
+        <span class="material-symbols-outlined filled" aria-hidden="true">person</span>
+        <span class="text-[11px] font-bold">Perfil</span>
+      </a>
+    </nav>
+  </div>
+
+  <script>
+    document.getElementById("logout-btn")?.addEventListener("click", () => {
+      if (confirm("Deseja sair da conta?")) {
+        window.location.href = "home.html";
+      }
+    });
+  </script>
+</body>
+</html>

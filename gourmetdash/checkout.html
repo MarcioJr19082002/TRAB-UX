@@ -73,7 +73,7 @@
     }
 
     .phone-shell {
-      width: min(100%, 420px);
+      width: min(100%, 430px);
       margin-inline: auto;
       min-height: 100dvh;
       background: var(--paper);
@@ -89,8 +89,10 @@
       }
 
       .phone-shell {
-        min-height: 844px;
-        max-height: 900px;
+        width: 430px;
+        height: calc(100dvh - 2.5rem);
+        min-height: calc(100dvh - 2.5rem);
+        max-height: calc(100dvh - 2.5rem);
         border-radius: 2rem;
         box-shadow:
           0 0 0 1px rgba(21, 26, 34, 0.06),
@@ -232,7 +234,7 @@
       </section>
     </main>
 
-    <footer class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[420px] px-5 py-3.5 bg-white/90 backdrop-blur-xl border-t border-paper-line z-40">
+    <footer class="absolute bottom-0 left-0 right-0 px-5 py-3.5 bg-white/90 backdrop-blur-xl border-t border-paper-line z-40">
       <div class="flex justify-between items-center">
         <div class="flex items-center gap-3">
           <div class="relative">

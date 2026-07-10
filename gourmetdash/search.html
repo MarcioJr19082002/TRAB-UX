@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GourmetDash | Buscar</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT: "#1565c0", deep: "#0d4a94", bright: "#2b8aef", soft: "#e8f3fc" },
+            ink: { DEFAULT: "#151a22", muted: "#4a5568", faint: "#7a8699" },
+            paper: { DEFAULT: "#f4f7fb", card: "#ffffff", line: "#dce4ef" },
+          },
+          fontFamily: { display: ["Outfit", "sans-serif"], sans: ["Manrope", "sans-serif"] },
+          boxShadow: {
+            soft: "0 8px 28px rgba(21, 26, 34, 0.06)",
+            lift: "0 14px 40px rgba(21, 101, 192, 0.22)",
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body {
+      font-family: Manrope, sans-serif;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, #cfe3fb 0%, transparent 55%),
+        linear-gradient(180deg, #f7fafc 0%, #e8eef6 100%);
+      min-height: 100dvh;
+      color: #151a22;
+    }
+    .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; user-select: none; }
+    .material-symbols-outlined.filled { font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24; }
+    .brand-wash {
+      background:
+        radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.22), transparent 45%),
+        linear-gradient(135deg, #0d4a94 0%, #1565c0 48%, #2b8aef 100%);
+    }
+    .phone-shell {
+      width: min(100%, 430px);
+      margin-inline: auto;
+      min-height: 100dvh;
+      background: #f4f7fb;
+      position: relative;
+      overflow-x: hidden;
+    }
+    @media (min-width: 480px) {
+      body { display: grid; place-items: center; padding: 2rem 1rem; }
+      .phone-shell {
+        width: 430px;
+        height: calc(100dvh - 2.5rem);
+        min-height: calc(100dvh - 2.5rem);
+        max-height: calc(100dvh - 2.5rem); border-radius: 2rem;
+        box-shadow: 0 0 0 1px rgba(21, 26, 34, 0.06), 0 24px 80px rgba(21, 26, 34, 0.14);
+        overflow: hidden; display: flex; flex-direction: column;
+      }
+      .phone-shell main { overflow-y: auto; flex: 1; }
+    }
+    .result-card.is-hidden { display: none; }
+    #search-input:focus { outline: none; box-shadow: 0 0 0 2px rgba(21, 101, 192, 0.25); }
+    .chip.is-active { background: #1565c0; color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="phone-shell">
+    <header class="sticky top-0 z-50 px-5 pt-4 pb-3 bg-paper/90 backdrop-blur-md border-b border-paper-line/60">
+      <h1 class="font-display text-xl font-extrabold mb-3">Buscar</h1>
+      <div class="relative">
+        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-faint" aria-hidden="true">search</span>
+        <input
+          id="search-input"
+          type="search"
+          placeholder="Restaurantes, pratos ou cozinha..."
+          class="w-full bg-white border border-paper-line rounded-2xl pl-11 pr-10 py-3 text-sm"
+          autocomplete="off"
+        />
+        <button type="button" id="clear-btn" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 grid place-items-center rounded-full text-ink-faint hover:bg-paper hidden" aria-label="Limpar">
+          <span class="material-symbols-outlined !text-lg" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <div id="chips" class="flex gap-2 overflow-x-auto mt-3 pb-0.5" style="scrollbar-width: none;">
+        <button type="button" class="chip is-active shrink-0 px-3 py-1.5 rounded-xl bg-[#eef1f5] text-xs font-bold" data-filter="all">Todos</button>
+        <button type="button" class="chip shrink-0 px-3 py-1.5 rounded-xl bg-[#eef1f5] text-ink-muted text-xs font-bold" data-filter="burger">Burgers</button>
+        <button type="button" class="chip shrink-0 px-3 py-1.5 rounded-xl bg-[#eef1f5] text-ink-muted text-xs font-bold" data-filter="pizza">Pizza</button>
+        <button type="button" class="chip shrink-0 px-3 py-1.5 rounded-xl bg-[#eef1f5] text-ink-muted text-xs font-bold" data-filter="sushi">Sushi</button>
+        <button type="button" class="chip shrink-0 px-3 py-1.5 rounded-xl bg-[#eef1f5] text-ink-muted text-xs font-bold" data-filter="doce">Doces</button>
+      </div>
+    </header>
+
+    <main class="px-5 py-4 pb-28">
+      <p id="results-label" class="text-xs font-bold text-ink-faint uppercase tracking-wider mb-3">Populares agora</p>
+      <div id="results" class="flex flex-col gap-3">
+        <a href="restaurant.html" class="result-card flex gap-3 bg-white rounded-2xl p-3 shadow-soft border border-paper-line" data-tags="burger" data-name="burger house classic burger">
+          <img class="w-16 h-16 rounded-xl object-cover shrink-0" src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=200&q=80" alt="" />
+          <div class="min-w-0 flex-1">
+            <div class="flex justify-between gap-2">
+              <h2 class="font-display text-sm font-bold truncate">Burger House</h2>
+              <span class="text-[11px] font-bold text-brand shrink-0">4.8 ★</span>
+            </div>
+            <p class="text-xs text-ink-muted mt-0.5">Burgers · 20–30 min</p>
+            <p class="text-[11px] text-brand font-bold mt-1">Entrega grátis</p>
+          </div>
+        </a>
+
+        <a href="home.html" class="result-card flex gap-3 bg-white rounded-2xl p-3 shadow-soft border border-paper-line" data-tags="sushi" data-name="sushi zen sashimi">
+          <img class="w-16 h-16 rounded-xl object-cover shrink-0" src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&w=200&q=80" alt="" />
+          <div class="min-w-0 flex-1">
+            <div class="flex justify-between gap-2">
+              <h2 class="font-display text-sm font-bold truncate">Sushi Zen</h2>
+              <span class="text-[11px] font-bold text-brand shrink-0">4.9 ★</span>
+            </div>
+            <p class="text-xs text-ink-muted mt-0.5">Sushi · 40–50 min</p>
+            <p class="text-[11px] text-ink-muted font-semibold mt-1">Entrega R$ 5,00</p>
+          </div>
+        </a>
+
+        <a href="closed.html" class="result-card flex gap-3 bg-white rounded-2xl p-3 shadow-soft border border-paper-line opacity-80" data-tags="pizza" data-name="pizza place napolitana">
+          <img class="w-16 h-16 rounded-xl object-cover shrink-0 grayscale-[30%]" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=200&q=80" alt="" />
+          <div class="min-w-0 flex-1">
+            <div class="flex justify-between gap-2">
+              <h2 class="font-display text-sm font-bold truncate">Pizza Place</h2>
+              <span class="text-[11px] font-bold text-[#b91c1c] shrink-0">Fechado</span>
+            </div>
+            <p class="text-xs text-ink-muted mt-0.5">Pizza · Abre às 18:00</p>
+            <p class="text-[11px] text-ink-muted font-semibold mt-1">4.5 ★ · 1,8 km</p>
+          </div>
+        </a>
+
+        <a href="home.html" class="result-card flex gap-3 bg-white rounded-2xl p-3 shadow-soft border border-paper-line" data-tags="doce" data-name="doce casa brownie sobremesa">
+          <img class="w-16 h-16 rounded-xl object-cover shrink-0" src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=200&q=80" alt="" />
+          <div class="min-w-0 flex-1">
+            <div class="flex justify-between gap-2">
+              <h2 class="font-display text-sm font-bold truncate">Doce Casa</h2>
+              <span class="text-[11px] font-bold text-brand shrink-0">4.7 ★</span>
+            </div>
+            <p class="text-xs text-ink-muted mt-0.5">Sobremesas · 15–25 min</p>
+            <p class="text-[11px] text-brand font-bold mt-1">Entrega grátis</p>
+          </div>
+        </a>
+      </div>
+      <p id="empty" class="hidden text-center text-sm text-ink-muted py-10">Nenhum resultado encontrado.</p>
+    </main>
+
+    <nav class="absolute bottom-0 left-0 right-0 z-50 flex justify-around items-center px-3 py-2.5 bg-white/90 backdrop-blur-xl border-t border-paper-line" aria-label="Navegação principal">
+      <a href="home.html" class="flex flex-col items-center gap-0.5 text-ink-faint hover:text-ink p-2 rounded-xl transition">
+        <span class="material-symbols-outlined" aria-hidden="true">home</span>
+        <span class="text-[11px] font-bold">Início</span>
+      </a>
+      <a href="search.html" class="flex flex-col items-center gap-0.5 text-brand font-bold bg-brand-soft rounded-xl px-4 py-1.5" aria-current="page">
+        <span class="material-symbols-outlined filled" aria-hidden="true">search</span>
+        <span class="text-[11px] font-bold">Buscar</span>
+      </a>
+      <a href="tracking.html" class="flex flex-col items-center gap-0.5 text-ink-faint hover:text-ink p-2 rounded-xl transition">
+        <span class="material-symbols-outlined" aria-hidden="true">shopping_bag</span>
+        <span class="text-[11px] font-bold">Pedidos</span>
+      </a>
+      <a href="profile.html" class="flex flex-col items-center gap-0.5 text-ink-faint hover:text-ink p-2 rounded-xl transition">
+        <span class="material-symbols-outlined" aria-hidden="true">person</span>
+        <span class="text-[11px] font-bold">Perfil</span>
+      </a>
+    </nav>
+  </div>
+
+  <script>
+    const input = document.getElementById("search-input");
+    const clearBtn = document.getElementById("clear-btn");
+    const cards = [...document.querySelectorAll(".result-card")];
+    const empty = document.getElementById("empty");
+    const label = document.getElementById("results-label");
+    let filter = "all";
+
+    function applyFilters() {
+      const q = input.value.trim().toLowerCase();
+      clearBtn.classList.toggle("hidden", !q);
+      label.textContent = q ? "Resultados" : "Populares agora";
+      let visible = 0;
+      cards.forEach((card) => {
+        const tags = card.dataset.tags || "";
+        const name = card.dataset.name || "";
+        const matchFilter = filter === "all" || tags.includes(filter);
+        const matchQuery = !q || name.includes(q);
+        const show = matchFilter && matchQuery;
+        card.classList.toggle("is-hidden", !show);
+        if (show) visible += 1;
+      });
+      empty.classList.toggle("hidden", visible > 0);
+    }
+
+    input?.addEventListener("input", applyFilters);
+    clearBtn?.addEventListener("click", () => {
+      input.value = "";
+      input.focus();
+      applyFilters();
+    });
+
+    document.getElementById("chips")?.addEventListener("click", (event) => {
+      const chip = event.target.closest(".chip");
+      if (!chip) return;
+      document.querySelectorAll(".chip").forEach((el) => {
+        el.classList.remove("is-active");
+        el.classList.add("text-ink-muted");
+      });
+      chip.classList.add("is-active");
+      chip.classList.remove("text-ink-muted");
+      filter = chip.dataset.filter;
+      applyFilters();
+    });
+  </script>
+</body>
+</html>

@@ -76,7 +76,7 @@
     }
 
     .phone-shell {
-      width: min(100%, 420px);
+      width: min(100%, 430px);
       margin-inline: auto;
       min-height: 100dvh;
       background: var(--paper);
@@ -92,8 +92,10 @@
       }
 
       .phone-shell {
-        min-height: 844px;
-        max-height: 900px;
+        width: 430px;
+        height: calc(100dvh - 2.5rem);
+        min-height: calc(100dvh - 2.5rem);
+        max-height: calc(100dvh - 2.5rem);
         border-radius: 2rem;
         box-shadow:
           0 0 0 1px rgba(26, 28, 29, 0.06),
@@ -152,15 +154,16 @@
     }
 
     .cart-bar {
-      left: 50%;
-      transform: translate(-50%, 120%);
+      left: 0;
+      right: 0;
+      transform: translateY(120%);
       opacity: 0;
       pointer-events: none;
       transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
     }
 
     .cart-bar.is-visible {
-      transform: translate(-50%, 0);
+      transform: translateY(0);
       opacity: 1;
       pointer-events: auto;
     }
@@ -417,7 +420,7 @@
       </section>
     </main>
 
-    <div id="cart-bar" class="cart-bar fixed bottom-6 w-full max-w-[420px] px-5 z-[60]">
+    <div id="cart-bar" class="cart-bar absolute bottom-24 w-full px-5 z-[60]">
       <a href="cart.html" class="w-full h-14 brand-wash rounded-2xl shadow-lift flex items-center justify-between px-4 active:scale-[0.98] transition group">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-xl bg-white/20 backdrop-blur grid place-items-center">

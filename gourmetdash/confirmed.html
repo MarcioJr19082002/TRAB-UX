@@ -74,7 +74,7 @@
     }
 
     .phone-shell {
-      width: min(100%, 420px);
+      width: min(100%, 430px);
       margin-inline: auto;
       min-height: 100dvh;
       background: var(--paper);
@@ -90,8 +90,10 @@
       }
 
       .phone-shell {
-        min-height: 844px;
-        max-height: 900px;
+        width: 430px;
+        height: calc(100dvh - 2.5rem);
+        min-height: calc(100dvh - 2.5rem);
+        max-height: calc(100dvh - 2.5rem);
         border-radius: 2rem;
         box-shadow:
           0 0 0 1px rgba(21, 26, 34, 0.06),
@@ -149,7 +151,7 @@
   <div class="phone-shell">
     <div class="absolute inset-0 pointer-events-none z-20 overflow-hidden" id="confetti-container" aria-hidden="true"></div>
 
-    <main class="relative z-10 min-h-[100dvh] md:min-h-[844px] flex flex-col items-center justify-center px-6 py-10 text-center">
+    <main class="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-10 text-center">
       <div class="relative mb-7 check-pop">
         <div class="absolute inset-0 bg-brand/20 blur-3xl rounded-full scale-150"></div>
         <div class="relative w-28 h-28 brand-wash rounded-full grid place-items-center shadow-lift success-bounce">

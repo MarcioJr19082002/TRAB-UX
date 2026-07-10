@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GourmetDash | Chat com entregador</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: "#1565c0",
+              deep: "#0d4a94",
+              bright: "#2b8aef",
+              soft: "#e8f3fc",
+            },
+            ink: {
+              DEFAULT: "#151a22",
+              muted: "#4a5568",
+              faint: "#7a8699",
+            },
+            paper: {
+              DEFAULT: "#f4f7fb",
+              card: "#ffffff",
+              line: "#dce4ef",
+            },
+          },
+          fontFamily: {
+            display: ["Outfit", "sans-serif"],
+            sans: ["Manrope", "sans-serif"],
+          },
+          boxShadow: {
+            soft: "0 8px 28px rgba(21, 26, 34, 0.06)",
+            lift: "0 14px 40px rgba(21, 101, 192, 0.22)",
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    :root {
+      --brand: #1565c0;
+      --paper: #f4f7fb;
+    }
+
+    body {
+      font-family: Manrope, sans-serif;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, #cfe3fb 0%, transparent 55%),
+        linear-gradient(180deg, #f7fafc 0%, #e8eef6 100%);
+      min-height: 100dvh;
+      color: #151a22;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      user-select: none;
+    }
+
+    .material-symbols-outlined.filled {
+      font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+
+    .brand-wash {
+      background:
+        radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.22), transparent 45%),
+        linear-gradient(135deg, #0d4a94 0%, #1565c0 48%, #2b8aef 100%);
+    }
+
+    .phone-shell {
+      width: min(100%, 430px);
+      margin-inline: auto;
+      min-height: 100dvh;
+      background: var(--paper);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 480px) {
+      body {
+        display: grid;
+        place-items: center;
+        padding: 2rem 1rem;
+      }
+
+      .phone-shell {
+        width: 430px;
+        height: calc(100dvh - 2.5rem);
+        min-height: calc(100dvh - 2.5rem);
+        max-height: calc(100dvh - 2.5rem);
+        border-radius: 2rem;
+        box-shadow:
+          0 0 0 1px rgba(21, 26, 34, 0.06),
+          0 24px 80px rgba(21, 26, 34, 0.14);
+      }
+    }
+
+    .chat-scroll {
+      flex: 1;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    .bubble-in {
+      animation: bubble 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes bubble {
+      from { opacity: 0; transform: translateY(8px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #7a8699;
+      animation: typing 1.2s ease-in-out infinite;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.15s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes typing {
+      0%, 60%, 100% { opacity: 0.35; transform: translateY(0); }
+      30% { opacity: 1; transform: translateY(-3px); }
+    }
+
+    .quick-chip {
+      white-space: nowrap;
+    }
+
+    #message-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(21, 101, 192, 0.2);
+    }
+
+    .online-dot {
+      box-shadow: 0 0 0 2px #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-shell">
+    <header class="shrink-0 z-40 flex items-center gap-3 px-4 h-16 bg-white/90 backdrop-blur-md border-b border-paper-line">
+      <a href="tracking.html" class="w-10 h-10 grid place-items-center rounded-full hover:bg-paper active:scale-90 transition" aria-label="Voltar">
+        <span class="material-symbols-outlined text-brand" aria-hidden="true">arrow_back</span>
+      </a>
+      <div class="relative shrink-0">
+        <img
+          class="w-10 h-10 rounded-full object-cover"
+          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=160&q=80"
+          alt="Alex M."
+        />
+        <span class="online-dot absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="font-display text-sm font-bold truncate">Alex M.</p>
+        <p class="text-[11px] text-emerald-600 font-semibold">Online · Pedido #8273</p>
+      </div>
+      <a href="tel:+5511999990000" class="w-10 h-10 grid place-items-center rounded-full bg-brand-soft text-brand active:scale-90 transition" aria-label="Ligar">
+        <span class="material-symbols-outlined" aria-hidden="true">call</span>
+      </a>
+    </header>
+
+    <div class="shrink-0 px-4 py-2.5 bg-brand-soft/60 border-b border-paper-line">
+      <div class="flex items-center gap-2 text-xs text-brand">
+        <span class="material-symbols-outlined !text-[16px]" aria-hidden="true">moped</span>
+        <span class="font-semibold">Chegando em ~5 min · Rua das Flores, 123</span>
+      </div>
+    </div>
+
+    <div id="chat-scroll" class="chat-scroll px-4 py-4 space-y-3" role="log" aria-live="polite" aria-label="Mensagens">
+      <p class="text-center text-[11px] font-bold text-ink-faint uppercase tracking-wider py-1">Hoje</p>
+
+      <div class="flex gap-2 items-end max-w-[85%]">
+        <img class="w-7 h-7 rounded-full object-cover shrink-0" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" alt="" />
+        <div>
+          <div class="bg-white border border-paper-line rounded-2xl rounded-bl-md px-3.5 py-2.5 shadow-soft">
+            <p class="text-sm leading-relaxed">Oi! Sou o Alex, estou com o seu pedido #8273 👋</p>
+          </div>
+          <span class="text-[10px] text-ink-faint mt-1 block pl-1">18:42</span>
+        </div>
+      </div>
+
+      <div class="flex gap-2 items-end max-w-[85%]">
+        <img class="w-7 h-7 rounded-full object-cover shrink-0 opacity-0" alt="" aria-hidden="true" />
+        <div>
+          <div class="bg-white border border-paper-line rounded-2xl rounded-bl-md px-3.5 py-2.5 shadow-soft">
+            <p class="text-sm leading-relaxed">Chego em cerca de 5 minutos. Tem algum detalhe do endereço?</p>
+          </div>
+          <span class="text-[10px] text-ink-faint mt-1 block pl-1">18:42</span>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <div class="max-w-[85%]">
+          <div class="brand-wash text-white rounded-2xl rounded-br-md px-3.5 py-2.5 shadow-soft">
+            <p class="text-sm leading-relaxed">Oi Alex! É o apto 42, interfone 42.</p>
+          </div>
+          <span class="text-[10px] text-ink-faint mt-1 block text-right pr-1">18:43</span>
+        </div>
+      </div>
+
+      <div class="flex gap-2 items-end max-w-[85%]">
+        <img class="w-7 h-7 rounded-full object-cover shrink-0" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" alt="" />
+        <div>
+          <div class="bg-white border border-paper-line rounded-2xl rounded-bl-md px-3.5 py-2.5 shadow-soft">
+            <p class="text-sm leading-relaxed">Perfeito, já anotei. Até já!</p>
+          </div>
+          <span class="text-[10px] text-ink-faint mt-1 block pl-1">18:43</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="shrink-0 border-t border-paper-line bg-white/95 backdrop-blur-md">
+      <div class="px-4 pt-3 flex gap-2 overflow-x-auto no-scrollbar pb-1" style="scrollbar-width: none;">
+        <button type="button" class="quick-chip px-3 py-1.5 rounded-xl bg-brand-soft text-brand text-xs font-bold active:scale-95 transition" data-quick="Pode deixar na portaria, por favor.">Deixar na portaria</button>
+        <button type="button" class="quick-chip px-3 py-1.5 rounded-xl bg-brand-soft text-brand text-xs font-bold active:scale-95 transition" data-quick="Estou no interfone 42.">Interfone 42</button>
+        <button type="button" class="quick-chip px-3 py-1.5 rounded-xl bg-brand-soft text-brand text-xs font-bold active:scale-95 transition" data-quick="Tudo certo, te espero!">Te espero</button>
+      </div>
+
+      <form id="chat-form" class="px-4 py-3 flex items-end gap-2">
+        <label class="sr-only" for="message-input">Mensagem</label>
+        <input
+          id="message-input"
+          type="text"
+          autocomplete="off"
+          placeholder="Escreva uma mensagem..."
+          class="flex-1 bg-paper border border-paper-line rounded-2xl px-4 py-3 text-sm"
+        />
+        <button type="submit" id="send-btn" class="w-12 h-12 rounded-2xl brand-wash text-white grid place-items-center shadow-soft active:scale-90 transition shrink-0" aria-label="Enviar">
+          <span class="material-symbols-outlined" aria-hidden="true">send</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const scrollEl = document.getElementById("chat-scroll");
+    const form = document.getElementById("chat-form");
+    const input = document.getElementById("message-input");
+
+    const replies = [
+      "Combinado! 👍",
+      "Beleza, já estou quase aí.",
+      "Ok, sem problemas!",
+      "Recebido. Chegando em poucos minutos.",
+    ];
+
+    function nowLabel() {
+      return new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+    }
+
+    function scrollToBottom() {
+      scrollEl.scrollTop = scrollEl.scrollHeight;
+    }
+
+    function appendUserMessage(text) {
+      const wrap = document.createElement("div");
+      wrap.className = "flex justify-end bubble-in";
+      wrap.innerHTML = `
+        <div class="max-w-[85%]">
+          <div class="brand-wash text-white rounded-2xl rounded-br-md px-3.5 py-2.5 shadow-soft">
+            <p class="text-sm leading-relaxed"></p>
+          </div>
+          <span class="text-[10px] text-ink-faint mt-1 block text-right pr-1">${nowLabel()}</span>
+        </div>
+      `;
+      wrap.querySelector("p").textContent = text;
+      scrollEl.appendChild(wrap);
+      scrollToBottom();
+    }
+
+    function showTyping() {
+      const typing = document.createElement("div");
+      typing.id = "typing-indicator";
+      typing.className = "flex gap-2 items-end max-w-[85%] bubble-in";
+      typing.innerHTML = `
+        <img class="w-7 h-7 rounded-full object-cover shrink-0" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" alt="" />
+        <div class="bg-white border border-paper-line rounded-2xl rounded-bl-md px-4 py-3 shadow-soft flex gap-1.5 items-center">
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+        </div>
+      `;
+      scrollEl.appendChild(typing);
+      scrollToBottom();
+    }
+
+    function appendDriverReply() {
+      document.getElementById("typing-indicator")?.remove();
+      const text = replies[Math.floor(Math.random() * replies.length)];
+      const wrap = document.createElement("div");
+      wrap.className = "flex gap-2 items-end max-w-[85%] bubble-in";
+      wrap.innerHTML = `
+        <img class="w-7 h-7 rounded-full object-cover shrink-0" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" alt="" />
+        <div>
+          <div class="bg-white border border-paper-line rounded-2xl rounded-bl-md px-3.5 py-2.5 shadow-soft">
+            <p class="text-sm leading-relaxed"></p>
+          </div>
+          <span class="text-[10px] text-ink-faint mt-1 block pl-1">${nowLabel()}</span>
+        </div>
+      `;
+      wrap.querySelector("p").textContent = text;
+      scrollEl.appendChild(wrap);
+      scrollToBottom();
+    }
+
+    function sendMessage(text) {
+      const value = text.trim();
+      if (!value) return;
+      appendUserMessage(value);
+      input.value = "";
+      showTyping();
+      setTimeout(appendDriverReply, 900 + Math.random() * 700);
+    }
+
+    form?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      sendMessage(input.value);
+    });
+
+    document.querySelectorAll("[data-quick]").forEach((chip) => {
+      chip.addEventListener("click", () => sendMessage(chip.dataset.quick));
+    });
+
+    scrollToBottom();
+    input?.focus();
+  </script>
+</body>
+</html>
